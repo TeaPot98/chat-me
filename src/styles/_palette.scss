@@ -1,0 +1,18 @@
+$primary-color: #35b449;
+$primary-color-600: #269a43;
+$primary-color-700: #1a813e;
+
+$text-primary-color: #191919;
+$text-secondary-color: #5b6666;
+$text-dark-accent-color: #0c0c0c;
+$text-light-color: #ffffff;
+
+$surface-white-color: #ffffff;
+$surface-gray-color: #f6f6f6;
+$surface-dark-color: #191919;
+
+// FIXME: Which red is correct?
+// $red: #ff5943;
+$red: #ff3d2e;
+
+$box-shadow-color: #{rgba($text-primary-color, 0.04)};
