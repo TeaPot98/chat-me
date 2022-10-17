@@ -3,7 +3,7 @@ import { MessageBubble } from "./MessageBubble";
 
 export default {
   component: MessageBubble,
-  title: "Atoms/Message Bubble",
+  title: "Atoms/MessageBubble",
 };
 
 const Template: ComponentStory<typeof MessageBubble> = (args) => (
