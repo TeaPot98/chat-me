@@ -1,0 +1,18 @@
+@import "ChatListItem";
+
+.chat-list {
+  background-color: white;
+  z-index: 100;
+  position: sticky;
+  top: 0;
+  bottom: 0;
+  min-width: 250px;
+  height: 100%;
+  padding: 8px;
+  transition: min-width 0.2s, padding 0.2s ease-in-out;
+  overflow-y: hidden;
+
+  &-item ~ &-item {
+    border-top: 1px solid lightgray;
+  }
+}
