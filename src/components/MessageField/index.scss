@@ -1,13 +1,37 @@
 .message-field {
   display: flex;
-  border: 1px solid gray;
+  align-items: end;
   padding: 0.5rem;
-  border-radius: 1rem;
+
+  &__input-wrapper {
+    background-color: $surface-white-color;
+    width: 100%;
+    border-radius: 1rem;
+    padding: 0.5rem;
+  }
 
   &__input {
-    // border: none;
+    border: none;
+    padding: 0.5rem;
+    width: 100%;
     resize: none;
-    height: 50px;
-    max-height: 80px;
+    max-height: 180px;
+    font-size: 1rem;
+    font-family: inherit;
+
+    &:focus,
+    &:active {
+      outline: none;
+    }
+  }
+
+  @include media-breakpoint-up(lg) {
+    background-color: $surface-white-color;
+    margin: 1rem;
+    border-radius: 1rem;
+
+    &__input-wrapper {
+      padding: 0;
+    }
   }
 }

@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useEffect } from "react";
 
 import classNames from "classnames";
 
@@ -23,28 +23,40 @@ export const MessageField = ({
 
   const handleChange = (event: React.FormEvent<HTMLTextAreaElement>) => {
     setMessage(event.currentTarget.value);
-    autoResize();
     onChange(event);
   };
 
-  const autoResize = () => {
+  useEffect(() => {
     const $textAreaEl = textAreaRef.current;
+    if (!$textAreaEl) return;
 
-    if ($textAreaEl) {
-      // $textAreaEl.style.height = "20px";
-      $textAreaEl.style.height = `${$textAreaEl.scrollHeight}px`;
-    }
-  };
+    $textAreaEl.style.boxSizing = "border-box";
+    const offset = $textAreaEl.offsetHeight - $textAreaEl.clientHeight;
+
+    const autoResize = (event: any) => {
+      event.target.style.height = "auto";
+      event.target.style.height = event.target.scrollHeight + offset + "px";
+    };
+
+    $textAreaEl.addEventListener("input", autoResize);
+    $textAreaEl.removeAttribute("data-autoresize");
+
+    return () => {
+      $textAreaEl.removeEventListener("input", autoResize);
+    };
+  }, []);
 
   return (
     <div className={classNames(className, bem())} {...props}>
-      <textarea
-        ref={textAreaRef}
-        onChange={handleChange}
-        value={message}
-        placeholder="Type something..."
-        className={bem("input")}
-      />
+      <div className={bem("input-wrapper")}>
+        <textarea
+          ref={textAreaRef}
+          onChange={handleChange}
+          value={message}
+          placeholder="Type something..."
+          className={bem("input")}
+        />
+      </div>
       <IconButton>
         <Plane />
       </IconButton>
