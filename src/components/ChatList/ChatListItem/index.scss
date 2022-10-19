@@ -1,9 +1,21 @@
 .chat-list-item {
+  position: relative;
   display: flex;
   justify-content: space-between;
   gap: 0.5rem;
   padding: 0.5rem;
+  transition: background-color 0.2s ease-in-out;
   cursor: pointer;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    transition: background-color 0.2s ease-in-out;
+  }
 
   &__content {
     display: grid;
@@ -45,7 +57,11 @@
   }
 
   &--active {
-    background-color: lightblue;
+    background-color: #d1f0ff;
+
+    &::before {
+      background-color: #7db8ff;
+    }
   }
 
   &:hover:not(&--active) {
