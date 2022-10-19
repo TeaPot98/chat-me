@@ -47,19 +47,21 @@ export const MessageField = ({
   }, []);
 
   return (
-    <div className={classNames(className, bem())} {...props}>
-      <div className={bem("input-wrapper")}>
-        <textarea
-          ref={textAreaRef}
-          onChange={handleChange}
-          value={message}
-          placeholder="Type something..."
-          className={bem("input")}
-        />
+    <div className={bem("wrapper")}>
+      <div className={classNames(className, bem())} {...props}>
+        <div className={bem("input-wrapper")}>
+          <textarea
+            ref={textAreaRef}
+            onChange={handleChange}
+            value={message}
+            placeholder="Type something..."
+            className={bem("input")}
+          />
+        </div>
+        <IconButton>
+          <PlaneIcon />
+        </IconButton>
       </div>
-      <IconButton>
-        <PlaneIcon />
-      </IconButton>
     </div>
   );
 };
