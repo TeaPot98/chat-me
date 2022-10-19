@@ -1,7 +1,7 @@
 import { ComponentStory } from "@storybook/react";
 
 import { IconButton } from "./IconButton";
-import { Plane } from "svg";
+import { PlaneIcon } from "svg";
 
 export default {
   component: IconButton,
@@ -14,5 +14,5 @@ const Template: ComponentStory<typeof IconButton> = (args) => (
 
 export const Regular = Template.bind({});
 Regular.args = {
-  children: <Plane />,
+  children: <PlaneIcon />,
 };

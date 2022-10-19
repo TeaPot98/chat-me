@@ -1,0 +1,15 @@
+.chat-top-bar {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: auto;
+  background-color: $surface-white-color;
+  display: flex;
+  justify-content: space-between;
+
+  &__right {
+    display: flex;
+    align-items: center;
+  }
+}
