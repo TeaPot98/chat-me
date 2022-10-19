@@ -1,4 +1,8 @@
 .message-field {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
   display: flex;
   align-items: end;
   padding: 0.5rem;
@@ -27,8 +31,9 @@
 
   @include media-breakpoint-up(lg) {
     background-color: $surface-white-color;
-    margin: 1rem;
+    margin: 0 1rem;
     border-radius: 1rem;
+    bottom: 1rem;
 
     &__input-wrapper {
       padding: 0;

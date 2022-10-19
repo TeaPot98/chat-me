@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import classNames from "classnames";
 
 import { IconButton } from "components";
-import { Plane } from "svg";
+import { PlaneIcon } from "svg";
 import { makeBEM } from "utils";
 
 interface MessageFieldProps {
@@ -58,7 +58,7 @@ export const MessageField = ({
         />
       </div>
       <IconButton>
-        <Plane />
+        <PlaneIcon />
       </IconButton>
     </div>
   );

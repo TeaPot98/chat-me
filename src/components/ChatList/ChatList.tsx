@@ -44,8 +44,6 @@ const bem = makeBEM("chat-list");
 
 export const ChatList = () => {
   const { "*": chatId } = useParams();
-  console.log(useParams());
-  console.log(useLocation());
 
   return (
     <div className={bem()}>
@@ -53,7 +51,7 @@ export const ChatList = () => {
         <Link key={id} to={`/chats/${id}`}>
           <ChatListItem
             title={title}
-            subtitle={subtitle}
+            description={subtitle}
             status={status}
             time={time}
             active={id.toString() === chatId}

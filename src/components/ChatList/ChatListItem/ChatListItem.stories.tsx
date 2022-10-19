@@ -14,7 +14,7 @@ const Template: ComponentStory<typeof ChatListItem> = (args) => (
 export const Regular = Template.bind({});
 Regular.args = {
   title: "Andy",
-  subtitle: "Here is some",
+  description: "Here is some",
   avatar: (
     <img
       alt=""

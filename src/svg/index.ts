@@ -1,3 +1,7 @@
-export { ReactComponent as Plane } from "./plane.svg";
-export { ReactComponent as DoubleCheck } from "./double-check.svg";
-export { ReactComponent as Check } from "./check.svg";
+export { ReactComponent as PlaneIcon } from "./plane.svg";
+export { ReactComponent as DoubleCheckIcon } from "./double-check.svg";
+export { ReactComponent as CheckIcon } from "./check.svg";
+export { ReactComponent as PhoneIcon } from "./phone.svg";
+export { ReactComponent as MessageIcon } from "./message.svg";
+export { ReactComponent as KebabMenuIcon } from "./kebab-menu.svg";
+export { ReactComponent as LayoutIcon } from "./layout.svg";

@@ -1,0 +1,14 @@
+.message-bubble {
+  max-width: 500px;
+  border-radius: 1rem;
+  padding: 0.5rem;
+  border-top-left-radius: 0;
+  background-color: $surface-white-color;
+
+  &--sent {
+    background-color: lightblue;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 0;
+    align-self: end;
+  }
+}
