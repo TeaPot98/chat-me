@@ -9,3 +9,9 @@ export const getAll = async () => {
 
   return response;
 };
+
+export const getById = async (chatId: string) => {
+  const response = await axios.get(`/chats/${chatId}`);
+
+  return response;
+};
