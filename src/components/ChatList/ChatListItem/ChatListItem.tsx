@@ -7,7 +7,7 @@ export interface ChatListItemProps {
   className?: string;
   title: string;
   description?: string;
-  avatar?: React.ReactNode;
+  avatar?: string;
   status?: "unseen" | "seen" | undefined;
   time?: string;
   active?: boolean;
@@ -19,7 +19,7 @@ export const ChatListItem = ({
   className,
   title,
   description,
-  avatar,
+  avatar = "",
   status,
   active = false,
   time,
@@ -35,7 +35,7 @@ export const ChatListItem = ({
       )}
       {...props}
     >
-      <Avatar />
+      <Avatar name={title} description={description} image={avatar} />
       <div className={bem("status")}>
         <div>
           {status === "unseen" ? (

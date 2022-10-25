@@ -1,12 +1,5 @@
 .container {
-  // background: rgb(230, 233, 241);
-  // background: linear-gradient(
-  //   310deg,
-  //   rgba(230, 233, 241, 1) 0%,
-  //   rgba(233, 199, 225, 1) 28%,
-  //   rgba(246, 223, 210, 1) 100%
-  // );
-  // background: url(https://images.unsplash.com/photo-1519751138087-5bf79df62d5b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80);
+  background: rgb(230, 233, 241);
   background: url(https://images.unsplash.com/photo-1554189097-ffe88e998a2b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80);
   background-position: center;
   background-size: cover;
@@ -16,4 +9,15 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    backdrop-filter: blur(100px);
+  }
 }

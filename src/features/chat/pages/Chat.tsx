@@ -20,7 +20,7 @@ export const Chat = ({ children, ...props }: JSX.IntrinsicElements["div"]) => {
 
   return (
     <ChatContainer {...props}>
-      <ChatTopBar />
+      <ChatTopBar chat={data} />
       <Messages messages={data.messages} />
       <MessageField />
     </ChatContainer>
