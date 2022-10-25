@@ -4,9 +4,9 @@ import { useParams } from "react-router-dom";
 import { ChatContainer, ChatTopBar, MessageField } from "../components";
 import { Messages } from "../components/Messages";
 
-export const Chat = ({ children, ...props }: JSX.IntrinsicElements["div"]) => {
+export const Chat = ({ ...props }: JSX.IntrinsicElements["div"]) => {
   const { id: chatId } = useParams();
-  const { isLoading, isError, error, data, refetch } = useQuery(
+  const { isLoading, isError, data, refetch } = useQuery(
     ["chats", chatId],
     () => api.chats.getById(chatId!)
   );

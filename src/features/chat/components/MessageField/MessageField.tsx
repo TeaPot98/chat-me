@@ -40,6 +40,7 @@ export const MessageField = ({
     $textAreaEl.style.boxSizing = "border-box";
     const offset = $textAreaEl.offsetHeight - $textAreaEl.clientHeight;
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const autoResize = (event: any) => {
       event.target.style.height = "auto";
       event.target.style.height = event.target.scrollHeight + offset + "px";
