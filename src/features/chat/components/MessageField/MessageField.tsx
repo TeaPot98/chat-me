@@ -1,13 +1,17 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 
 import classNames from "classnames";
 
 import { IconButton } from "components";
 import { PlaneIcon } from "svg";
 import { makeBEM } from "utils";
+import api from "api";
+import { UserContext } from "context/UserContext";
 
 interface MessageFieldProps {
   className?: string;
+  chatId: string;
+  refetchMessages: () => void;
   onChange?: (event: React.SyntheticEvent) => void;
 }
 
@@ -15,9 +19,12 @@ const bem = makeBEM("message-field");
 
 export const MessageField = ({
   className,
+  chatId,
+  refetchMessages,
   onChange = () => null,
   ...props
 }: MessageFieldProps & JSX.IntrinsicElements["div"]) => {
+  const { userId } = useContext(UserContext);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [message, setMessage] = useState("");
 
@@ -46,6 +53,16 @@ export const MessageField = ({
     };
   }, []);
 
+  const sendMessage = async () => {
+    await api.messages.send({
+      senderId: userId,
+      chatId: chatId,
+      content: message,
+    });
+    refetchMessages();
+    setMessage("");
+  };
+
   return (
     <div className={bem("wrapper")}>
       <div className={classNames(className, bem())} {...props}>
@@ -58,7 +75,7 @@ export const MessageField = ({
             className={bem("input")}
           />
         </div>
-        <IconButton>
+        <IconButton onClick={sendMessage}>
           <PlaneIcon />
         </IconButton>
       </div>
