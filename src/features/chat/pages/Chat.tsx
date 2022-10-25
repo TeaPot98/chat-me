@@ -20,9 +20,13 @@ export const Chat = ({ children, ...props }: JSX.IntrinsicElements["div"]) => {
 
   return (
     <ChatContainer {...props}>
-      <ChatTopBar chat={data} />
-      <Messages messages={data.messages} />
-      <MessageField />
+      {!isError && (
+        <>
+          <ChatTopBar chat={data} />
+          <Messages messages={data.messages} />
+          <MessageField />
+        </>
+      )}
     </ChatContainer>
   );
 };
