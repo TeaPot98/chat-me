@@ -64,7 +64,7 @@ export const ChatList = () => {
           onClick={() => openNewConversation(id)}
         >
           <ChatListItem
-            title={name}
+            title={`${name} ${surname}`}
             description="dummy"
             status="seen"
             time="11:23"
@@ -73,7 +73,7 @@ export const ChatList = () => {
           />
         </Link>
       ))}
-      {chats.map(({ id, name, avatar }, i) => (
+      {chats.map(({ id, name, avatar }) => (
         <Link key={id} to={`/chats/${id}`}>
           <ChatListItem
             title={name}
