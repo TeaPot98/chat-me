@@ -61,7 +61,7 @@ export const ChatList = () => {
 
   return (
     <div className={bem()}>
-      {data.map(({ id, name }, i) => (
+      {data.map(({ id, name, avatar }, i) => (
         <Link key={id} to={`/chats/${id}`}>
           <ChatListItem
             title={name}
@@ -69,12 +69,7 @@ export const ChatList = () => {
             status="seen"
             time="11: 23"
             active={id.toString() === chatId}
-            avatar={
-              <img
-                alt=""
-                src="https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
-              />
-            }
+            avatar={avatar}
           />
         </Link>
       ))}

@@ -12,7 +12,11 @@ export const getAll = async () => {
 };
 
 export const getById = async (chatId: string) => {
-  const response = await axios.get<models.Chat>(`/chats/${chatId}`);
+  const response = await axios.get<models.Chat>(`/chats/${chatId}`, {
+    headers: {
+      "user-id": "6356a322024dc7eaa5c89e99",
+    },
+  });
 
   return response.data;
 };
