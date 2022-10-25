@@ -1,2 +1,8 @@
 export { default as axios } from "./axios";
-export * from "./chats";
+import * as chats from "./chats";
+
+const api = {
+  chats,
+};
+
+export default api;
