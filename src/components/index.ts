@@ -6,3 +6,4 @@ export * from "./Layout";
 export * from "./Container";
 export * from "./ErrorPage";
 export * from "./Avatar";
+export * from "./SearchField";

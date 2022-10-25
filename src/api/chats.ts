@@ -20,3 +20,9 @@ export const getById = async (chatId: string) => {
 
   return response.data;
 };
+
+export const create = async (newChat: models.Chat) => {
+  const response = await axios.post("/chats", newChat);
+
+  return response.data;
+};

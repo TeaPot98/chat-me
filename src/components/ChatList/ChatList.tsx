@@ -1,55 +1,26 @@
-import api from "api";
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link, useParams } from "react-router-dom";
 
+import api from "api";
+import { SearchField } from "components";
 import { makeBEM } from "utils";
-import { ChatListItem, ChatListItemProps } from "./ChatListItem";
-
-const chats = [
-  {
-    id: 1,
-    title: "John Doe",
-    subtitle: "some message",
-    status: "unseen" as ChatListItemProps["status"],
-    time: "11:14",
-  },
-  {
-    id: 2,
-    title: "John Doe",
-    subtitle: "some message",
-    time: "11:14",
-  },
-  {
-    id: 3,
-    title: "John Doe",
-    subtitle: "some message",
-    status: "seen" as ChatListItemProps["status"],
-    time: "11:14",
-  },
-  {
-    id: 4,
-    title: "John Doe",
-    subtitle: "some message",
-    status: "unseen" as ChatListItemProps["status"],
-    time: "11:14",
-  },
-  {
-    id: 5,
-    title: "John Doe",
-    subtitle: "some message",
-    status: "seen" as ChatListItemProps["status"],
-    time: "11:14",
-  },
-];
+import { ChatListItem } from "./ChatListItem";
+import models from "models";
 
 const bem = makeBEM("chat-list");
 
 export const ChatList = () => {
   const { "*": chatId } = useParams();
-  const { isLoading, isError, error, data } = useQuery(
-    ["chats"],
-    api.chats.getAll
-  );
+  const [searchString, setSearchString] = useState("");
+  const [users, setUsers] = useState<models.User[]>([]);
+  const {
+    isLoading,
+    isError,
+    error,
+    data: chats,
+    refetch,
+  } = useQuery(["chats"], api.chats.getAll);
 
   if (isLoading) return <div>is Loading</div>;
 
@@ -57,17 +28,49 @@ export const ChatList = () => {
     return <div>Error</div>;
   }
 
-  if (!data) return <></>;
+  if (!chats) return <></>;
+
+  const handleSearch = async (event: React.FormEvent<HTMLInputElement>) => {
+    setSearchString(event.currentTarget.value);
+    if (event.currentTarget.value.trim() !== "") {
+      const foundUsers = await api.users.findByName(
+        event.currentTarget.value.trim()
+      );
+      setUsers(
+        foundUsers.filter((u) => {
+          for (let i = 0; i < chats.length; i++) {
+            if (u.chats.includes(chats[i].id)) return false;
+          }
+          return true;
+        })
+      );
+    } else {
+      setUsers([]);
+    }
+  };
 
   return (
     <div className={bem()}>
-      {data.map(({ id, name, avatar }, i) => (
+      <SearchField value={searchString} onChange={handleSearch} />
+      {users.map(({ id, name, surname, avatar }) => (
         <Link key={id} to={`/chats/${id}`}>
           <ChatListItem
             title={name}
             description="dummy"
             status="seen"
-            time="11: 23"
+            time="11:23"
+            active={id.toString() === chatId}
+            avatar={avatar}
+          />
+        </Link>
+      ))}
+      {chats.map(({ id, name, avatar }, i) => (
+        <Link key={id} to={`/chats/${id}`}>
+          <ChatListItem
+            title={name}
+            description="dummy"
+            status="seen"
+            time="11:23"
             active={id.toString() === chatId}
             avatar={avatar}
           />
