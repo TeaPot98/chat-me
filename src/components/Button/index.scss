@@ -2,7 +2,7 @@
   border-radius: $button-border-radius;
   background-color: $surface-white-color;
 
-  padding: 0.5rem;
+  padding: 0.5rem 1rem;
   border: none;
 
   color: $text-primary-color;
@@ -10,7 +10,8 @@
   font-size: 0.75rem;
   text-transform: uppercase;
 
-  &:hover {
+  &:hover,
+  &:active {
     background-color: $surface-gray-color;
     cursor: pointer;
   }

@@ -17,9 +17,7 @@ export const ChatList = () => {
   const {
     isLoading,
     isError,
-    error,
     data: chats,
-    refetch,
   } = useQuery(["chats"], api.chats.getAll);
 
   if (isLoading) return <div>is Loading</div>;
@@ -49,17 +47,28 @@ export const ChatList = () => {
     }
   };
 
+  const openNewConversation = (userId: string) => {
+    setSearchString("");
+    setUsers((prevState) =>
+      prevState.filter((foundUser) => foundUser.id === userId)
+    );
+  };
+
   return (
     <div className={bem()}>
       <SearchField value={searchString} onChange={handleSearch} />
       {users.map(({ id, name, surname, avatar }) => (
-        <Link key={id} to={`/chats/${id}`}>
+        <Link
+          key={id}
+          to={`/chats/new/${id}`}
+          onClick={() => openNewConversation(id)}
+        >
           <ChatListItem
             title={name}
             description="dummy"
             status="seen"
             time="11:23"
-            active={id.toString() === chatId}
+            active={`new/${id.toString()}` === chatId}
             avatar={avatar}
           />
         </Link>
