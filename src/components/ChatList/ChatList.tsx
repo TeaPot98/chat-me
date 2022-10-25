@@ -1,4 +1,6 @@
-import { Link, useParams, useLocation } from "react-router-dom";
+import api from "api";
+import { useQuery } from "@tanstack/react-query";
+import { Link, useParams } from "react-router-dom";
 
 import { makeBEM } from "utils";
 import { ChatListItem, ChatListItemProps } from "./ChatListItem";
@@ -44,16 +46,28 @@ const bem = makeBEM("chat-list");
 
 export const ChatList = () => {
   const { "*": chatId } = useParams();
+  const { isLoading, isError, error, data } = useQuery(
+    ["chats"],
+    api.chats.getAll
+  );
+
+  if (isLoading) return <div>is Loading</div>;
+
+  if (isError) {
+    return <div>Error</div>;
+  }
+
+  if (!data) return <></>;
 
   return (
     <div className={bem()}>
-      {chats.map(({ id, title, subtitle, status, time }, i) => (
+      {data.map(({ id, name }, i) => (
         <Link key={id} to={`/chats/${id}`}>
           <ChatListItem
-            title={title}
-            description={subtitle}
-            status={status}
-            time={time}
+            title={name}
+            description="dummy"
+            status="seen"
+            time="11: 23"
             active={id.toString() === chatId}
             avatar={
               <img
