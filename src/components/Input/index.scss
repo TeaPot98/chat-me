@@ -8,7 +8,8 @@
     transform: translateY(-50%);
     color: gray;
     transition: transform $transition-duration ease-in-out,
-      font-size $transition-duration ease-in-out;
+      font-size $transition-duration ease-in-out,
+      color $transition-duration ease-in-out;
   }
 
   &__field {
@@ -23,13 +24,13 @@
 
     &:focus,
     &:active {
-      outline: 2px solid lightblue;
+      outline: 2px solid $primary-color;
     }
   }
 
   &__field:focus ~ &__label,
   &__field:active ~ &__label {
-    color: $text-primary-color;
+    color: $primary-color-600;
     // top: 0;
     transform: translateY(-120%);
     font-size: 0.75rem;
