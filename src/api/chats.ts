@@ -1,10 +1,12 @@
 import models from "models";
 import { axios } from "api";
 
+let token: string | null = null;
+
 export const getAll = async () => {
   const response = await axios.get<models.Chat[]>(`/chats`, {
     headers: {
-      "user-id": "6356a322024dc7eaa5c89e99",
+      authorization: `Bearer ${token}`,
     },
   });
 
@@ -14,7 +16,7 @@ export const getAll = async () => {
 export const getById = async (chatId: string) => {
   const response = await axios.get<models.Chat>(`/chats/${chatId}`, {
     headers: {
-      "user-id": "6356a322024dc7eaa5c89e99",
+      authorization: `Bearer ${token}`,
     },
   });
 
@@ -25,4 +27,8 @@ export const create = async (newChat: { [participants: string]: string[] }) => {
   const response = await axios.post("/chats", newChat);
 
   return response.data;
+};
+
+export const setToken = (newToken: string) => {
+  token = newToken;
 };
