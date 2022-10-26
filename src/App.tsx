@@ -6,12 +6,14 @@ import { UserContext } from "context/UserContext";
 import { AuthPage } from "features/auth/pages/AuthPage";
 
 function App() {
-  const { token } = useContext(UserContext);
+  const { loggedUser } = useContext(UserContext);
+
+  console.log("app loggedUser", loggedUser);
 
   return (
     <div className="App">
       <Routes>
-        {token ? (
+        {loggedUser !== null ? (
           <>
             <Route path="/" element={<Navigate to="/chats" />} />
             <Route path="/login" element={<AuthPage type="login" />} />

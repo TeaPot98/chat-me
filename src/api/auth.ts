@@ -7,3 +7,12 @@ export const register = async (user: models.RegistrationUser) => {
 
   return response.data;
 };
+
+export const login = async (loginCredentials: models.UserLoginCredentials) => {
+  const response = await axios.post<models.LoggedUser>(
+    "/login",
+    loginCredentials
+  );
+
+  return response.data;
+};
