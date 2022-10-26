@@ -1,24 +1,31 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 
 import { Layout } from "components";
-import { UserContextProvider } from "context/UserContext";
+import { UserContext } from "context/UserContext";
 import { AuthPage } from "features/auth/pages/AuthPage";
 
 function App() {
+  const { token } = useContext(UserContext);
+
   return (
     <div className="App">
-      <UserContextProvider>
-        <Routes>
-          <Route path="/" element={<Navigate to="/chats" />} />
-          <Route path="/login" element={<AuthPage type="login" />} />
-          <Route path="/register" element={<AuthPage type="register" />} />
-          {/* <Route path="/chats">
-          <Route path=":id" element={<Layout />} />
-        </Route> */}
-          <Route path="/chats/*" element={<Layout />} />
-        </Routes>
-      </UserContextProvider>
+      <Routes>
+        {token ? (
+          <>
+            <Route path="/" element={<Navigate to="/chats" />} />
+            <Route path="/login" element={<AuthPage type="login" />} />
+            <Route path="/register" element={<AuthPage type="register" />} />
+            <Route path="/chats/*" element={<Layout />} />
+          </>
+        ) : (
+          <>
+            <Route path="/login" element={<AuthPage type="login" />} />
+            <Route path="/register" element={<AuthPage type="register" />} />
+            <Route path="*" element={<Navigate to="/login" />} />
+          </>
+        )}
+      </Routes>
     </div>
   );
 }

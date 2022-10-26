@@ -7,12 +7,12 @@ import { UserContext } from "context/UserContext";
 import { ChatContainer } from "../components";
 
 export const NewChat = () => {
-  const { userId } = useContext(UserContext);
+  const loggedUser = useContext(UserContext);
   const { id: receiverId } = useParams();
 
   const initializeConversation = async () => {
     const newConversation = await api.chats.create({
-      participants: [userId, receiverId!],
+      participants: [loggedUser.id, receiverId!],
     });
     window.location.assign(`/chats/${newConversation.id}`);
   };

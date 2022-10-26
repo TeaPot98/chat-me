@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import classNames from "classnames";
 import { makeBEM } from "utils";
@@ -20,9 +20,25 @@ export const Input = React.forwardRef<
     { className, label, ...props }: InputProps & JSX.IntrinsicElements["input"],
     ref
   ) => {
+    const [isFilled, setIsFilled] = useState(false);
+    const updateContainerState = (e: React.ChangeEvent<HTMLInputElement>) =>
+      setIsFilled(!!e.target.value);
+
     return (
-      <div className={classNames(bem(), className)}>
-        <input className={bem("field")} {...props} ref={ref} />
+      <div
+        className={classNames(
+          bem(null, null, {
+            filled: isFilled,
+          }),
+          className
+        )}
+      >
+        <input
+          className={bem("field")}
+          {...props}
+          ref={ref}
+          onInput={updateContainerState}
+        />
         <label className={bem("label")}>{label}</label>
       </div>
     );

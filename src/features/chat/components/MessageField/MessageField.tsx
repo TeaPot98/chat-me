@@ -24,7 +24,7 @@ export const MessageField = ({
   onChange = () => null,
   ...props
 }: MessageFieldProps & JSX.IntrinsicElements["div"]) => {
-  const { userId } = useContext(UserContext);
+  const loggedUser = useContext(UserContext);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [message, setMessage] = useState("");
 
@@ -56,7 +56,7 @@ export const MessageField = ({
 
   const sendMessage = async () => {
     await api.messages.send({
-      senderId: userId,
+      senderId: loggedUser.id,
       chatId: chatId,
       content: message,
     });

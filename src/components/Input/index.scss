@@ -1,4 +1,6 @@
 .input {
+  $self: &;
+
   position: relative;
 
   &__label {
@@ -8,8 +10,7 @@
     transform: translateY(-50%);
     color: gray;
     transition: transform $transition-duration ease-in-out,
-      font-size $transition-duration ease-in-out,
-      color $transition-duration ease-in-out;
+      font-size $transition-duration ease-in-out;
   }
 
   &__field {
@@ -34,5 +35,12 @@
     // top: 0;
     transform: translateY(-120%);
     font-size: 0.75rem;
+  }
+
+  &--filled {
+    #{$self}__label {
+      transform: translateY(-120%);
+      font-size: 0.75rem;
+    }
   }
 }

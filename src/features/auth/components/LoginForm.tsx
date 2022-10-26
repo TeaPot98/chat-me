@@ -6,7 +6,7 @@ import { Button, Input } from "components";
 import { makeBEM } from "utils";
 
 type Inputs = {
-  email: string;
+  username: string;
   password: string;
 };
 
@@ -33,7 +33,7 @@ export const LoginForm = ({
         <h4>Welcome back!</h4>
         <p>Login to your account</p>
       </div>
-      <Input label="Email" type="email" {...register("email")} />
+      <Input label="Username" type="username" {...register("username")} />
       <Input label="Password" type="password" {...register("password")} />
       <div className={bem("footer")}>
         <span className={bem("error")}>{}</span>
