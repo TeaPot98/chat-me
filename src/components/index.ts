@@ -8,3 +8,4 @@ export * from "./ErrorPage";
 export * from "./Avatar";
 export * from "./SearchField";
 export * from "./LoadingIndicator";
+export * from "./Input";
