@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useParams, useNavigate } from "react-router-dom";
 
@@ -7,11 +7,13 @@ import { LoadingIndicator, SearchField } from "components";
 import { makeBEM } from "utils";
 import { ChatListItem } from "./ChatListItem";
 import models from "models";
+import { UserContext } from "context/UserContext";
 
 const bem = makeBEM("chat-list");
 
 export const ChatList = () => {
   const { "*": chatId } = useParams();
+  const { loggedUser } = useContext(UserContext);
   const navigate = useNavigate();
   const [searchString, setSearchString] = useState("");
   const [users, setUsers] = useState<models.User[]>([]);
@@ -19,7 +21,10 @@ export const ChatList = () => {
     isLoading,
     isError,
     data: chats,
-  } = useQuery(["chats"], api.chats.getAll);
+  } = useQuery(["chats"], () => {
+    api.chats.setToken(loggedUser!.token);
+    return api.chats.getAll();
+  });
 
   if (isLoading)
     return (
@@ -49,6 +54,7 @@ export const ChatList = () => {
       );
       setUsers(
         foundUsers.filter((u) => {
+          if (u.id === loggedUser!.id) return false;
           for (let i = 0; i < chats.length; i++) {
             if (u.chats.includes(chats[i].id)) return false;
           }
