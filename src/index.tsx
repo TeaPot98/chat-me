@@ -7,6 +7,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import App from "App";
 
 import "./styles/index.scss";
+import { UserContextProvider } from "context/UserContext";
 
 const queryClient = new QueryClient();
 
@@ -17,7 +18,9 @@ root.render(
   <React.StrictMode>
     <Router>
       <QueryClientProvider client={queryClient}>
-        <App />
+        <UserContextProvider>
+          <App />
+        </UserContextProvider>
       </QueryClientProvider>
     </Router>
   </React.StrictMode>
