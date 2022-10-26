@@ -7,3 +7,4 @@ export * from "./Container";
 export * from "./ErrorPage";
 export * from "./Avatar";
 export * from "./SearchField";
+export * from "./LoadingIndicator";
