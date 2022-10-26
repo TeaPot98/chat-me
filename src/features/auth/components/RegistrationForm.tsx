@@ -8,6 +8,8 @@ import { makeBEM } from "utils";
 type Inputs = {
   email: string;
   password: string;
+  name: string;
+  surname: string;
 };
 
 interface LoginFormProps {
@@ -16,7 +18,7 @@ interface LoginFormProps {
 
 const bem = makeBEM("form");
 
-export const LoginForm = ({
+export const RegistrationForm = ({
   className,
   ...props
 }: LoginFormProps & JSX.IntrinsicElements["form"]) => {
@@ -30,17 +32,19 @@ export const LoginForm = ({
       {...props}
     >
       <div className={bem("header")}>
-        <h4>Welcome back!</h4>
-        <p>Login to your account</p>
+        <h4>Get Started</h4>
+        <p>Create your free account</p>
       </div>
       <Input label="Email" type="email" {...register("email")} />
+      <Input label="Name" type="text" {...register("name")} />
+      <Input label="Surname" type="text" {...register("surname")} />
       <Input label="Password" type="password" {...register("password")} />
       <div className={bem("footer")}>
         <span className={bem("error")}>{}</span>
         <p>
-          Don&apos;t have an account ? <Link to="/register">Sign Up</Link>
+          Already have an account ? <Link to="/login">Login</Link>
         </p>
-        <Button type="submit">Log in</Button>
+        <Button type="submit">Sign Up</Button>
       </div>
     </form>
   );
