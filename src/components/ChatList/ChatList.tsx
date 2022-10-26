@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 
 import api from "api";
 import { LoadingIndicator, SearchField } from "components";
@@ -12,6 +12,7 @@ const bem = makeBEM("chat-list");
 
 export const ChatList = () => {
   const { "*": chatId } = useParams();
+  const navigate = useNavigate();
   const [searchString, setSearchString] = useState("");
   const [users, setUsers] = useState<models.User[]>([]);
   const {
@@ -64,39 +65,48 @@ export const ChatList = () => {
     setUsers((prevState) =>
       prevState.filter((foundUser) => foundUser.id === userId)
     );
+    navigate(`/chats/new/${userId}`);
+  };
+
+  const openConversation = (chatId: string) => {
+    navigate(`/chats/${chatId}`);
   };
 
   return (
     <div className={bem()}>
-      <SearchField value={searchString} onChange={handleSearch} />
-      {users.map(({ id, name, surname, avatar }) => (
-        <Link
-          key={id}
-          to={`/chats/new/${id}`}
-          onClick={() => openNewConversation(id)}
-        >
+      <div className={bem("header")}>
+        <SearchField
+          style={{ display: "block", margin: "auto" }}
+          value={searchString}
+          onChange={handleSearch}
+        />
+      </div>
+      <div className={bem("body")}>
+        {users.map(({ id, name, surname, avatar }) => (
           <ChatListItem
+            key={id}
             title={`${name} ${surname}`}
             description="dummy"
             status="seen"
             time="11:23"
             active={`new/${id.toString()}` === chatId}
             avatar={avatar}
+            onClick={() => openNewConversation(id)}
           />
-        </Link>
-      ))}
-      {chats.map(({ id, name, avatar }) => (
-        <Link key={id} to={`/chats/${id}`}>
+        ))}
+        {chats.map(({ id, name, avatar }) => (
           <ChatListItem
+            key={id}
             title={name}
             description="dummy"
             status="seen"
             time="11:23"
             active={id.toString() === chatId}
             avatar={avatar}
+            onClick={() => openConversation(id)}
           />
-        </Link>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };
