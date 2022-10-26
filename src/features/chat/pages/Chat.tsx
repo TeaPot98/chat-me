@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import api from "api";
+import { LoadingIndicator } from "components";
 import { useParams } from "react-router-dom";
 import { ChatContainer, ChatTopBar, MessageField } from "../components";
 import { Messages } from "../components/Messages";
@@ -11,7 +12,12 @@ export const Chat = ({ ...props }: JSX.IntrinsicElements["div"]) => {
     () => api.chats.getById(chatId!)
   );
 
-  if (isLoading) return <div>is Loading</div>;
+  if (isLoading)
+    return (
+      <ChatContainer {...props}>
+        <LoadingIndicator style={{ alignSelf: "center" }} />
+      </ChatContainer>
+    );
 
   if (isError) {
     return <div>Error</div>;
