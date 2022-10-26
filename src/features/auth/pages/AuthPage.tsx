@@ -1,9 +1,14 @@
 import { LoginForm } from "../components/LoginForm";
+import { RegistrationForm } from "../components/RegistrationForm";
 
-export const AuthPage = () => {
+interface AuthPageProps {
+  type: "login" | "register";
+}
+
+export const AuthPage = ({ type }: AuthPageProps) => {
   return (
     <div className="auth-page blurred-background">
-      <LoginForm />
+      {type === "login" ? <LoginForm /> : <RegistrationForm />}
     </div>
   );
 };

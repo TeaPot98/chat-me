@@ -11,7 +11,8 @@ function App() {
       <UserContextProvider>
         <Routes>
           <Route path="/" element={<Navigate to="/chats" />} />
-          <Route path="login" element={<AuthPage />} />
+          <Route path="/login" element={<AuthPage type="login" />} />
+          <Route path="/register" element={<AuthPage type="register" />} />
           {/* <Route path="/chats">
           <Route path=":id" element={<Layout />} />
         </Route> */}
