@@ -1,2 +1,13 @@
 .search-field {
+  display: block;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  background-color: whitesmoke;
+
+  &:focus,
+  &:active {
+    outline: 2px solid $primary-color;
+  }
 }

@@ -1,6 +1,8 @@
 @import "ChatListItem";
 
 .chat-list {
+  $self: &;
+
   background-color: white;
   z-index: 100;
   position: sticky;
@@ -11,7 +13,13 @@
   transition: min-width 0.2s, padding 0.2s ease-in-out;
   overflow-y: hidden;
 
-  &-item ~ &-item {
-    border-top: 1px solid lightgray;
+  &__header {
+    padding: 1rem;
+  }
+
+  &__body {
+    #{$self}-item ~ #{$self}-item {
+      border-top: 1px solid lightgray;
+    }
   }
 }
