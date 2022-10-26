@@ -37,7 +37,7 @@ export const RegistrationForm = ({
       });
     },
     {
-      onSuccess: (newUser) => {
+      onSuccess: () => {
         navigate("/chats");
       },
     }
