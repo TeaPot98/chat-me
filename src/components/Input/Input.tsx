@@ -5,6 +5,7 @@ import { makeBEM } from "utils";
 
 interface InputProps {
   className?: string;
+  label: React.ReactNode;
 }
 
 type Ref = HTMLInputElement;
@@ -16,11 +17,14 @@ export const Input = React.forwardRef<
   InputProps & JSX.IntrinsicElements["input"]
 >(
   (
-    { className, ...props }: InputProps & JSX.IntrinsicElements["input"],
+    { className, label, ...props }: InputProps & JSX.IntrinsicElements["input"],
     ref
   ) => {
     return (
-      <input className={classNames(bem(), className)} {...props} ref={ref} />
+      <div className={classNames(bem(), className)}>
+        <input className={bem("field")} {...props} ref={ref} />
+        <label className={bem("label")}>{label}</label>
+      </div>
     );
   }
 );
