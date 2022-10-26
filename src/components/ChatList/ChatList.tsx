@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Link, useParams } from "react-router-dom";
 
 import api from "api";
-import { SearchField } from "components";
+import { LoadingIndicator, SearchField } from "components";
 import { makeBEM } from "utils";
 import { ChatListItem } from "./ChatListItem";
 import models from "models";
@@ -20,7 +20,19 @@ export const ChatList = () => {
     data: chats,
   } = useQuery(["chats"], api.chats.getAll);
 
-  if (isLoading) return <div>is Loading</div>;
+  if (isLoading)
+    return (
+      <div
+        className={bem()}
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <LoadingIndicator />
+      </div>
+    );
 
   if (isError) {
     return <div>Error</div>;
