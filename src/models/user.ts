@@ -1,6 +1,5 @@
 export interface User {
   id: string;
-  token: string;
   name: string;
   surname: string;
   username: string;
@@ -9,5 +8,19 @@ export interface User {
 }
 
 export interface RegistrationUser extends Omit<User, "id" | "chats" | "token"> {
+  password: string;
+}
+
+export interface UserContext {
+  loggedUser: LoggedUser | null;
+  updateLoggedUser: (user: LoggedUser) => void;
+}
+
+export interface LoggedUser extends Omit<User, "chats"> {
+  token: string;
+}
+
+export interface UserLoginCredentials {
+  username: string;
   password: string;
 }

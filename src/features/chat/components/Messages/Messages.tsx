@@ -18,12 +18,12 @@ export const Messages = ({
   messages,
   ...props
 }: MessagesProps & JSX.IntrinsicElements["div"]) => {
-  const { userId } = useContext(UserContext);
+  const { loggedUser } = useContext(UserContext);
 
   return (
     <div className={classNames(bem(), className)} {...props}>
       {messages.map((m, i) => (
-        <MessageBubble key={i} isSent={m.senderId === userId}>
+        <MessageBubble key={i} isSent={m.senderId === loggedUser!.id}>
           {m.content}
         </MessageBubble>
       ))}

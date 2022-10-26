@@ -1,9 +1,13 @@
-import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { Link, useNavigate } from "react-router-dom";
 import classNames from "classnames";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 import { Button, Input } from "components";
 import { makeBEM } from "utils";
+import api from "api";
+import { UserContext } from "context/UserContext";
 
 type Inputs = {
   username: string;
@@ -20,8 +24,25 @@ export const LoginForm = ({
   className,
   ...props
 }: LoginFormProps & JSX.IntrinsicElements["form"]) => {
+  const navigate = useNavigate();
   const { register, handleSubmit } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  const { updateLoggedUser } = useContext(UserContext);
+
+  const login = useMutation(
+    (userCredentials: Inputs) => {
+      return api.auth.login(userCredentials);
+    },
+    {
+      onSuccess: (loggedUser) => {
+        updateLoggedUser(loggedUser);
+        navigate("/chats");
+      },
+    }
+  );
+
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    login.mutate(data);
+  };
 
   return (
     <form
@@ -40,7 +61,9 @@ export const LoginForm = ({
         <p>
           Don&apos;t have an account ? <Link to="/register">Sign Up</Link>
         </p>
-        <Button type="submit">Log in</Button>
+        <Button type="submit">
+          {login.isLoading ? "Logging in..." : "Log in"}
+        </Button>
       </div>
     </form>
   );

@@ -2,27 +2,29 @@ import React, { useState, useEffect } from "react";
 
 import models from "models";
 
-const initialContext: models.User = {
-  id: "",
-  name: "",
-  surname: "",
-  username: "",
-  avatar: "",
-  token: "",
-  chats: [],
+const initialContext: models.UserContext = {
+  updateLoggedUser: () => null,
+  loggedUser: null,
 };
 
 export const UserContext = React.createContext(initialContext);
 
 export const UserContextProvider = ({ children }: React.PropsWithChildren) => {
-  const [loggedUser, setLoggedUser] = useState(initialContext);
+  const loggedUserJSON = window.localStorage.getItem("loggedUser");
+  const [loggedUser, setLoggedUser] = useState<models.LoggedUser | null>(
+    loggedUserJSON ? JSON.parse(loggedUserJSON) : null
+  );
 
-  useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem("loggedUser");
-    if (loggedUserJSON) setLoggedUser(JSON.parse(loggedUserJSON));
-  }, []);
+  const updateLoggedUser = (newUser: models.LoggedUser) => {
+    window.localStorage.setItem("loggedUser", JSON.stringify(newUser));
+    setLoggedUser(newUser);
+  };
+
+  console.log("context loggedUser", loggedUser);
 
   return (
-    <UserContext.Provider value={loggedUser}>{children}</UserContext.Provider>
+    <UserContext.Provider value={{ loggedUser, updateLoggedUser }}>
+      {children}
+    </UserContext.Provider>
   );
 };
