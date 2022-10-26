@@ -3,16 +3,41 @@
   background-color: $surface-white-color;
 
   padding: 0.5rem 1rem;
-  border: none;
-
-  color: $text-primary-color;
+  cursor: pointer;
   font-weight: 600;
   font-size: 0.75rem;
   text-transform: uppercase;
+  border-color: transparent;
 
-  &:hover,
-  &:active {
-    background-color: $surface-gray-color;
-    cursor: pointer;
+  &--primary {
+    color: $surface-white-color;
+    background-color: $primary-color;
+
+    &:hover {
+      background-color: $primary-color-600;
+    }
+  }
+
+  &--white {
+    background-color: $surface-white-color;
+    color: $primary-color;
+
+    &:hover {
+      background-color: $surface-gray-color;
+      border: 2px solid $surface-gray-color;
+      color: $primary-color-600;
+    }
+  }
+
+  &--outlined {
+    border: 2px solid $primary-color;
+    background-color: $surface-white-color;
+    color: $primary-color;
+
+    &:hover {
+      border-color: $primary-color-600;
+      background-color: $surface-gray-color;
+      color: $primary-color-600;
+    }
   }
 }
