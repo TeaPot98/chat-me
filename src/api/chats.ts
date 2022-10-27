@@ -15,9 +15,7 @@ export const getAll = async () => {
 
 export const getById = async (chatId: string) => {
   const response = await axios.get<models.Chat>(`/chats/${chatId}`, {
-    headers: {
-      authorization: `Bearer ${token}`,
-    },
+    headers: { authorization: `Bearer ${token}` },
   });
 
   return response.data;
