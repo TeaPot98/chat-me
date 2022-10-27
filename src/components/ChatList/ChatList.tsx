@@ -49,6 +49,7 @@ export const ChatList = () => {
   const handleSearch = async (event: React.FormEvent<HTMLInputElement>) => {
     setSearchString(event.currentTarget.value);
     if (event.currentTarget.value.trim() !== "") {
+      api.users.setToken(loggedUser!.token);
       const foundUsers = await api.users.findByName(
         event.currentTarget.value.trim()
       );
@@ -56,7 +57,7 @@ export const ChatList = () => {
         foundUsers.filter((u) => {
           if (u.id === loggedUser!.id) return false;
           for (let i = 0; i < chats.length; i++) {
-            if (u.chats.includes(chats[i].id)) return false;
+            if (chats[i].participants.includes(u.id)) return false;
           }
           return true;
         })

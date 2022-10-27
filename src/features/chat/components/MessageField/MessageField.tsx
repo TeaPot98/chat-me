@@ -55,6 +55,7 @@ export const MessageField = ({
   }, []);
 
   const sendMessage = async () => {
+    api.messages.setToken(loggedUser!.token);
     await api.messages.send({
       senderId: loggedUser!.id,
       chatId: chatId,

@@ -16,7 +16,7 @@ export interface UserContext {
   updateLoggedUser: (user: LoggedUser) => void;
 }
 
-export interface LoggedUser extends Omit<User, "chats"> {
+export interface LoggedUser extends User {
   token: string;
 }
 
