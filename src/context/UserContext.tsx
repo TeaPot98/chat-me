@@ -20,8 +20,6 @@ export const UserContextProvider = ({ children }: React.PropsWithChildren) => {
     setLoggedUser(newUser);
   };
 
-  console.log("context loggedUser", loggedUser);
-
   return (
     <UserContext.Provider value={{ loggedUser, updateLoggedUser }}>
       {children}

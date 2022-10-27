@@ -8,8 +8,6 @@ import { AuthPage } from "features/auth/pages/AuthPage";
 function App() {
   const { loggedUser } = useContext(UserContext);
 
-  console.log("app loggedUser", loggedUser);
-
   return (
     <div className="App">
       <Routes>
