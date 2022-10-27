@@ -29,20 +29,19 @@ export const Chat = ({ ...props }: JSX.IntrinsicElements["div"]) => {
     }
   );
 
-  if (isLoading)
-    return (
-      <ChatContainer {...props}>
-        <LoadingIndicator style={{ alignSelf: "center" }} />
-      </ChatContainer>
-    );
-
   if (!data) return <></>;
 
   return (
     <ChatContainer {...props}>
-      <ChatTopBar chat={data} />
-      <Messages messages={data.messages} />
-      <MessageField chatId={chatId!} refetchMessages={refetch} />
+      {isLoading ? (
+        <LoadingIndicator style={{ alignSelf: "center" }} />
+      ) : (
+        <>
+          <ChatTopBar chat={data} />
+          <Messages messages={data.messages} />
+          <MessageField chatId={chatId!} refetchMessages={refetch} />
+        </>
+      )}
     </ChatContainer>
   );
 };
