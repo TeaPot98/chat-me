@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { AxiosError } from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 
@@ -7,7 +8,6 @@ import { LoadingIndicator } from "components";
 import { UserContext } from "context/UserContext";
 import { ChatContainer, ChatTopBar, MessageField } from "../components";
 import { Messages } from "../components/Messages";
-import { AxiosError } from "axios";
 
 export const Chat = ({ ...props }: JSX.IntrinsicElements["div"]) => {
   const navigate = useNavigate();
