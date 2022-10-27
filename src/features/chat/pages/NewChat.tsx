@@ -11,6 +11,7 @@ export const NewChat = () => {
   const { id: receiverId } = useParams();
 
   const initializeConversation = async () => {
+    api.chats.setToken(loggedUser!.token);
     const newConversation = await api.chats.create({
       participants: [loggedUser!.id, receiverId!],
     });
