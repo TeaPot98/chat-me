@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 
 import api from "api";
@@ -7,15 +7,25 @@ import { LoadingIndicator } from "components";
 import { UserContext } from "context/UserContext";
 import { ChatContainer, ChatTopBar, MessageField } from "../components";
 import { Messages } from "../components/Messages";
+import { AxiosError } from "axios";
 
 export const Chat = ({ ...props }: JSX.IntrinsicElements["div"]) => {
+  const navigate = useNavigate();
   const { loggedUser } = useContext(UserContext);
   const { id: chatId } = useParams();
-  const { isLoading, isError, data, refetch } = useQuery(
+  const { isLoading, data, refetch } = useQuery(
     ["chats", chatId],
     () => {
       api.chats.setToken(loggedUser!.token);
       return api.chats.getById(chatId!);
+    },
+    {
+      onError: (error: AxiosError) => {
+        const statusCode = error?.response?.status;
+        if (statusCode && [400, 403, 404].includes(statusCode))
+          navigate("/chats");
+      },
+      retry: false,
     }
   );
 
@@ -25,10 +35,6 @@ export const Chat = ({ ...props }: JSX.IntrinsicElements["div"]) => {
         <LoadingIndicator style={{ alignSelf: "center" }} />
       </ChatContainer>
     );
-
-  if (isError) {
-    return <div>Error</div>;
-  }
 
   if (!data) return <></>;
 
