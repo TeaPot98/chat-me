@@ -11,7 +11,11 @@ import { UserContext } from "context/UserContext";
 
 const bem = makeBEM("chat-list");
 
-export const ChatList = () => {
+interface ChatListProps {
+  onMenuOpen: (value: boolean) => void;
+}
+
+export const ChatList = ({ onMenuOpen }: ChatListProps) => {
   const { "*": chatId } = useParams();
   const { loggedUser } = useContext(UserContext);
   const navigate = useNavigate();
@@ -72,10 +76,12 @@ export const ChatList = () => {
     setUsers((prevState) =>
       prevState.filter((foundUser) => foundUser.id === userId)
     );
+    onMenuOpen(false);
     navigate(`/chats/new/${userId}`);
   };
 
   const openConversation = (chatId: string) => {
+    onMenuOpen(false);
     navigate(`/chats/${chatId}`);
   };
 
@@ -86,6 +92,7 @@ export const ChatList = () => {
           style={{ display: "block", margin: "auto" }}
           value={searchString}
           onChange={handleSearch}
+          placeholder="Find chat..."
         />
       </div>
       <div className={bem("body")}>

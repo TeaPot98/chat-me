@@ -9,3 +9,4 @@ export * from "./Avatar";
 export * from "./SearchField";
 export * from "./LoadingIndicator";
 export * from "./Input";
+export * from "./SideMenu";

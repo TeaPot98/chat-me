@@ -19,7 +19,9 @@ export const ChatTopBar = ({
 }: ChatTopBarProps & JSX.IntrinsicElements["div"]) => {
   return (
     <div className={classNames(bem(), className)} {...props}>
-      <Avatar name={chat.name} image={chat.avatar} />
+      <div className={bem("left")}>
+        <Avatar name={chat.name} image={chat.avatar} />
+      </div>
       <div className={bem("right")}>
         <IconButton>
           <PhoneIcon />

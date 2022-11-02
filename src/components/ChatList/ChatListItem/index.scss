@@ -61,10 +61,10 @@
   }
 
   &--active {
-    background-color: #d1f0ff;
+    background-color: $primary-color-200;
 
     &::before {
-      background-color: #7db8ff;
+      background-color: $primary-color;
     }
   }
 

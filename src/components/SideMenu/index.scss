@@ -1,0 +1,35 @@
+.side-menu {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  width: 0;
+  overflow: hidden;
+  transition: min-width $transition-duration ease-in-out;
+
+  &__header {
+    align-self: center;
+
+    .icon-button {
+      position: absolute;
+      right: 0.5rem;
+      top: 0.5rem;
+    }
+  }
+
+  &--open {
+    min-width: 100vw;
+  }
+}
+
+@include media-breakpoint-up(md) {
+  .side-menu {
+    min-width: 250px;
+
+    &__header {
+      .icon-button {
+        display: none;
+      }
+    }
+  }
+}

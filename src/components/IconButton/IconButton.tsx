@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import { makeBEM } from "utils";
 
-interface ButtonProps {
+export interface ButtonProps {
   className?: string;
 }
 

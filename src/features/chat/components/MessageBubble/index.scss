@@ -1,19 +1,14 @@
 .message-bubble {
   max-width: 500px;
   border-radius: 1rem;
-  padding: 0.75rem;
+  padding: 0.5rem 0.75rem;
   border-top-left-radius: 0;
   background-color: $surface-white-color;
 
   &--sent {
+    color: $surface-white-color;
     background-color: lightblue;
-    background: rgb(187, 233, 255);
-    background: linear-gradient(
-      103deg,
-      rgba(187, 233, 255, 1) 0%,
-      rgba(125, 184, 255, 1) 48%,
-      rgba(91, 85, 255, 1) 100%
-    );
+    background: $primary-color-600;
     border-top-left-radius: 1rem;
     border-top-right-radius: 0;
     align-self: flex-end;

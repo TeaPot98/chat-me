@@ -6,6 +6,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { Button, Input } from "components";
 import { makeBEM } from "utils";
 import api from "api";
+import { AppLogo } from "components/AppLogo/AppLogo";
 
 type Inputs = {
   email: string;
@@ -54,7 +55,8 @@ export const RegistrationForm = ({
       {...props}
     >
       <div className={bem("header")}>
-        <h4>Get Started</h4>
+        <AppLogo />
+        {/* <h4>Get Started</h4> */}
         <p>Create your free account</p>
       </div>
       <Input label="Name" type="text" {...register("name")} />
