@@ -1,5 +1,4 @@
 import classNames from "classnames";
-import { useState } from "react";
 
 import { IconButton } from "components";
 import { BackArrowIcon } from "svg";

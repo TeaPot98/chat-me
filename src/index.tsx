@@ -8,6 +8,7 @@ import App from "App";
 
 import "./styles/index.scss";
 import { UserContextProvider } from "context/UserContext";
+import { SocketIoProvider } from "context/SocketIoContext";
 
 const queryClient = new QueryClient();
 
@@ -19,7 +20,9 @@ root.render(
     <Router>
       <QueryClientProvider client={queryClient}>
         <UserContextProvider>
-          <App />
+          <SocketIoProvider>
+            <App />
+          </SocketIoProvider>
         </UserContextProvider>
       </QueryClientProvider>
     </Router>

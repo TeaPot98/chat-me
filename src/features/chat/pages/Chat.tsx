@@ -1,18 +1,21 @@
-import { useContext } from "react";
 import { AxiosError } from "axios";
-import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import { useContext, useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 import api from "api";
+import models from "models";
 import { LoadingIndicator } from "components";
-import { UserContext } from "context/UserContext";
-import { ChatContainer, ChatTopBar, MessageField } from "../components";
 import { Messages } from "../components/Messages";
+import { UserContext, SocketIoContext } from "context";
+import { ChatContainer, ChatTopBar, MessageField } from "../components";
 
 export const Chat = ({ ...props }: JSX.IntrinsicElements["div"]) => {
   const navigate = useNavigate();
-  const { loggedUser } = useContext(UserContext);
   const { id: chatId } = useParams();
+  const socket = useContext(SocketIoContext);
+  const { loggedUser } = useContext(UserContext);
+  const [messages, setMessages] = useState<models.Message[]>([]);
   const { isLoading, data, refetch } = useQuery(
     ["chats", chatId],
     () => {
@@ -29,6 +32,18 @@ export const Chat = ({ ...props }: JSX.IntrinsicElements["div"]) => {
     }
   );
 
+  useEffect(() => {
+    socket?.on("message", (message) => {
+      setMessages((oldMessages) => [...oldMessages, message]);
+    });
+
+    socket?.emit("getMessages");
+
+    return () => {
+      console.log("end");
+    };
+  }, []);
+
   if (!data) return <></>;
 
   return (
@@ -38,7 +53,7 @@ export const Chat = ({ ...props }: JSX.IntrinsicElements["div"]) => {
       ) : (
         <>
           <ChatTopBar chat={data} />
-          <Messages messages={data.messages} />
+          <Messages messages={messages} />
           <MessageField chatId={chatId!} refetchMessages={refetch} />
         </>
       )}
