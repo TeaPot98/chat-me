@@ -1,3 +1,4 @@
+import uuid from "react-uuid";
 import { AxiosError } from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { useContext, useState, useEffect } from "react";
@@ -48,8 +49,18 @@ export const Chat = ({ ...props }: JSX.IntrinsicElements["div"]) => {
       setMessages((oldMessages) => [...oldMessages, message]);
     });
 
+    socket?.on("message-sent", (sentMessage) => {
+      console.log("message sent:", sentMessage);
+      setMessages((oldMessages) => {
+        return oldMessages.filter((m) =>
+          m.id !== sentMessage.oldId ? m : sentMessage
+        );
+      });
+    });
+
     return () => {
       socket?.off("message");
+      socket?.off("message-sent");
     };
   }, []);
 
@@ -60,16 +71,17 @@ export const Chat = ({ ...props }: JSX.IntrinsicElements["div"]) => {
   };
 
   const sendMessage = async () => {
-    if (newMessage.trim() !== "") {
-      const newMessageObject = {
-        senderId: loggedUser!.id,
-        chatId: chatId,
-        content: newMessage,
-      };
-      setMessages((oldMessages) => [...oldMessages]);
-      socket?.emit("message", newMessageObject);
-      setNewMessage("");
-    }
+    if (newMessage.trim() === "") return;
+    const newMessageObject = {
+      senderId: loggedUser!.id,
+      chatId: chatId!,
+      content: newMessage,
+      id: uuid(),
+      timestamp: new Date(),
+    };
+    setMessages((oldMessages) => [...oldMessages, newMessageObject]);
+    socket?.emit("message", newMessageObject);
+    setNewMessage("");
   };
 
   if (!data) return <></>;
