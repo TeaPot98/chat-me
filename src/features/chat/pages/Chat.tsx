@@ -10,13 +10,16 @@ import { Messages } from "../components/Messages";
 import { UserContext, SocketIoContext } from "context";
 import { ChatContainer, ChatTopBar, MessageField } from "../components";
 
+const twentyFourHoursInMs = 1000 * 60 * 60 * 24;
+
 export const Chat = ({ ...props }: JSX.IntrinsicElements["div"]) => {
   const navigate = useNavigate();
   const { id: chatId } = useParams();
   const socket = useContext(SocketIoContext);
   const { loggedUser } = useContext(UserContext);
   const [messages, setMessages] = useState<models.Message[]>([]);
-  const { isLoading, data, refetch } = useQuery(
+  const [newMessage, setNewMessage] = useState("");
+  const { isLoading, data } = useQuery(
     ["chats", chatId],
     () => {
       api.chats.setToken(loggedUser!.token);
@@ -28,21 +31,46 @@ export const Chat = ({ ...props }: JSX.IntrinsicElements["div"]) => {
         if (statusCode && [400, 403, 404].includes(statusCode))
           navigate("/chats");
       },
+      onSuccess: (data) => {
+        setMessages(data.messages);
+      },
       retry: false,
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
+      staleTime: twentyFourHoursInMs,
     }
   );
 
   useEffect(() => {
     socket?.on("message", (message) => {
+      console.log("message received:", message);
       setMessages((oldMessages) => [...oldMessages, message]);
     });
 
-    socket?.emit("getMessages");
-
     return () => {
-      console.log("end");
+      socket?.off("message");
     };
   }, []);
+
+  const handleMessageFieldChange = (
+    e: React.FormEvent<HTMLTextAreaElement>
+  ) => {
+    setNewMessage(e.currentTarget.value);
+  };
+
+  const sendMessage = async () => {
+    if (newMessage.trim() !== "") {
+      const newMessageObject = {
+        senderId: loggedUser!.id,
+        chatId: chatId,
+        content: newMessage,
+      };
+      setMessages((oldMessages) => [...oldMessages]);
+      socket?.emit("message", newMessageObject);
+      setNewMessage("");
+    }
+  };
 
   if (!data) return <></>;
 
@@ -54,7 +82,11 @@ export const Chat = ({ ...props }: JSX.IntrinsicElements["div"]) => {
         <>
           <ChatTopBar chat={data} />
           <Messages messages={messages} />
-          <MessageField chatId={chatId!} refetchMessages={refetch} />
+          <MessageField
+            onChange={handleMessageFieldChange}
+            onSend={sendMessage}
+            value={newMessage}
+          />
         </>
       )}
     </ChatContainer>

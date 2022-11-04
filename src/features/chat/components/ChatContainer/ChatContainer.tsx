@@ -13,7 +13,10 @@ export const ChatContainer = ({
   ...props
 }: ChatContainerProps & JSX.IntrinsicElements["div"]) => {
   return (
-    <div className={classNames(bem(), className)} {...props}>
+    <div
+      className={classNames(bem(), className, "blurred-background")}
+      {...props}
+    >
       {children}
     </div>
   );

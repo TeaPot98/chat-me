@@ -7,7 +7,7 @@ interface AuthPageProps {
 
 export const AuthPage = ({ type }: AuthPageProps) => {
   return (
-    <div className="auth-page blurred-background">
+    <div className="auth-page blurred-background image-background">
       {type === "login" ? <LoginForm /> : <RegistrationForm />}
     </div>
   );

@@ -8,7 +8,7 @@ const bem = makeBEM("container");
 
 export const Container = ({ ...props }: JSX.IntrinsicElements["div"]) => {
   return (
-    <div className={classNames(bem(), "blurred-background")} {...props}>
+    <div className={classNames(bem(), "image-background")} {...props}>
       <div id="hamburger-container"></div>
       <Routes>
         <Route path="new/:id" element={<NewChat />} />

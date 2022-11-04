@@ -3,7 +3,7 @@ import { axios } from "api";
 import models from "models";
 
 export const register = async (user: models.RegistrationUser) => {
-  const response = await axios.post<models.User>("/users", user);
+  const response = await axios.post<models.User>("/register", user);
 
   return response.data;
 };

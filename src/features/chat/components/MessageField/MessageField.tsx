@@ -1,37 +1,28 @@
-import { useState, useRef, useEffect, useContext } from "react";
+import { useRef, useEffect } from "react";
 
 import classNames from "classnames";
 
 import { IconButton } from "components";
 import { PlaneIcon } from "svg";
 import { makeBEM } from "utils";
-import api from "api";
-import { UserContext } from "context/UserContext";
 
 interface MessageFieldProps {
   className?: string;
-  chatId: string;
-  refetchMessages: () => void;
-  onChange?: (event: React.SyntheticEvent) => void;
+  value: string;
+  onChange: (event: React.FormEvent<HTMLTextAreaElement>) => void;
+  onSend?: () => void;
 }
 
 const bem = makeBEM("message-field");
 
 export const MessageField = ({
   className,
-  chatId,
-  refetchMessages,
+  value,
+  onSend = () => null,
   onChange = () => null,
   ...props
-}: MessageFieldProps & JSX.IntrinsicElements["div"]) => {
-  const { loggedUser } = useContext(UserContext);
+}: MessageFieldProps & Omit<JSX.IntrinsicElements["div"], "onChange">) => {
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
-  const [message, setMessage] = useState("");
-
-  const handleChange = (event: React.FormEvent<HTMLTextAreaElement>) => {
-    setMessage(event.currentTarget.value);
-    onChange(event);
-  };
 
   useEffect(() => {
     const $textAreaEl = textAreaRef.current;
@@ -54,30 +45,19 @@ export const MessageField = ({
     };
   }, []);
 
-  const sendMessage = async () => {
-    api.messages.setToken(loggedUser!.token);
-    await api.messages.send({
-      senderId: loggedUser!.id,
-      chatId: chatId,
-      content: message,
-    });
-    refetchMessages();
-    setMessage("");
-  };
-
   return (
     <div className={bem("wrapper")}>
       <div className={classNames(className, bem())} {...props}>
         <div className={bem("input-wrapper")}>
           <textarea
             ref={textAreaRef}
-            onChange={handleChange}
-            value={message}
+            onChange={onChange}
+            value={value}
             placeholder="Type something..."
             className={bem("input")}
           />
         </div>
-        <IconButton onClick={sendMessage}>
+        <IconButton onClick={onSend}>
           <PlaneIcon />
         </IconButton>
       </div>

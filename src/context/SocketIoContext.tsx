@@ -35,9 +35,10 @@ export const SocketIoProvider = ({ children }: React.PropsWithChildren) => {
 
     return () => {
       newSocket.off("connect");
+      newSocket.off("connection-error");
       newSocket.off("disconnect");
     };
-  }, []);
+  }, [loggedUser]);
 
   return (
     <SocketIoContext.Provider value={socket}>
